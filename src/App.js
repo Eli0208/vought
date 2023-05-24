@@ -23,9 +23,23 @@ import Products from './pages/Products';
 import ViewItem from './pages/ViewItem';
 import Checkout from './pages/Checkout';
 import OrderHistory from './pages/OrderHistory';
+import Orders from './pages/Orders';
 
 
 const theme = extendTheme({
+  components: {
+    Modal: {
+      baseStyle: {
+        overlay: {
+          bg: "rgba(0, 0, 0, 0.5)", // Change the color and opacity as per your requirement
+        },
+        dialog: {
+          bg: "#333333", // Change the color to your desired background color
+          color: "#C0C0C0", // Change the color to your desired text color
+        },
+      },
+    },
+  },
   fonts: {
     body: "'Roboto Condensed', sans-serif",
   },
@@ -60,14 +74,14 @@ function App() {
       height='100vh'
       >
         <Router>
-          <Header token={token} setToken={setToken}/>
+          <Header token={token} setToken={setToken} role={role}/>
           {(token == null || role == 'user')&&
           <Routes>
             <Route path='/' element={<Landing />} />
             <Route path='/signin' element={<SignIn setToken={setToken}/>} />
             <Route path='/signup' element={<SignUp />} />
             <Route path='/products' element={<Products/>} />
-            <Route path='/viewitem/:productId' element={<ViewItem/>} />
+            <Route path='/viewitem/:productId' element={<ViewItem token = {token}/>} />
             <Route path='/checkout/:productId' element={<Checkout token={token}/>} />
             <Route path='/orderhistory' element={<OrderHistory token={token}/>} />
           </Routes>
@@ -78,6 +92,7 @@ function App() {
             <Route path='/additem' element={<AddItem token={token} sellerId={userData._id} />} />
             <Route path='/viewproducts' element={<RetrieveAllProducts token={token}/>} />
             <Route path='/updateitem/:productId' element={<UpdateItem token={token}/>}/>
+            <Route path='/orderhistory' element={<Orders token={token} />} />
           </Routes>
           }
         </Router>

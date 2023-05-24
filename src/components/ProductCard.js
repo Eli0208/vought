@@ -5,12 +5,13 @@ import { Link, useNavigate } from 'react-router-dom'
 
 function ProductCard({product}) {
   const navigate = useNavigate();
+  console.log(product)
   return (
     <Flex>
       <Box
       >
         <Box>
-          <Image src={ph} alt='' />
+          <Image src={product.image == null ? ph : `${process.env.REACT_APP_API_URL}/${product.image}`} alt='' />
         </Box>
         <Flex
           width='100%'

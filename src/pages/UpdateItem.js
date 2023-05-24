@@ -26,7 +26,23 @@ export default function UpdateItem({token, sellerId}) {
     const stocRef = useRef();
     const actiRef = useRef();
 
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [imageUrl, setImageUrl] = useState('');
+    const fileInputRef = useRef(null);
 
+    const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+    const fileUrl = URL.createObjectURL(file);
+    setImageUrl(fileUrl);
+    const formData = new FormData();
+    formData.append("image", selectedFile);
+    console.log(selectedFile)
+    };
+
+    const handleUpload = () => {
+        fileInputRef.current.click();
+    }
 
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_URL}/products/${productId}`)
@@ -43,26 +59,26 @@ export default function UpdateItem({token, sellerId}) {
                 text: 'Please double check entries',
             })
         }else{
+            const formData = new FormData();
+            formData.append("name", nameRef.current.value);
+            formData.append("description", descRef.current.value);
+            formData.append('price', pricRef.current.value);
+            formData.append('quantity', stocRef.current.value);
+            formData.append("image", selectedFile);
+            console.log(formData);
             fetch(`${process.env.REACT_APP_API_URL}/products/${productId}`, {
                 method: "PUT",
                 headers: {
                     Authorization : `Bearer ${token}`,
-                    "Content-type" : "application/json"
                 },
-                body: JSON.stringify({
-                    name: nameRef.current.value,
-                    description: descRef.current.value,
-                    price: pricRef.current.value,
-                    quantity: stocRef.current.value,
-                    isActive: actiRef.current.value
-                })
+                body: formData,
             })
             .then(res => res.json())
             .then(data => {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Successfully added an Item!',
-                    text: 'Item is now saved',
+                    title: 'Successfully updated Item!',
+                    text: 'Item is now updated',
                     confirmButtonText: 'OKAY!',
                   }).then((result) => {
                     if (result.isConfirmed) {
@@ -80,6 +96,7 @@ export default function UpdateItem({token, sellerId}) {
         justifyContent='center'
         alignContent='center'
         mt='5%'
+        height='80%'
     >   
     {item &&
     <>
@@ -89,12 +106,24 @@ export default function UpdateItem({token, sellerId}) {
         >
             <Box 
                 width='80%'
+                align='center'
                 >
-                    <Image src={ph} w='100%'/>
+                    <Image 
+                    src={imageUrl ? imageUrl : item.image ? `${process.env.REACT_APP_API_URL}/${item.image}`: ph} 
+                    height='70%'
+                    />
                     <Box
                         mt='1rem'
+                        
                     >
+                        <Input 
+                            type="file"
+                            ref={fileInputRef}
+                            style={{ display: 'none' }}
+                            onChange={handleFileChange}
+                            />
                         <Button
+                            onClick={() => handleUpload()}
                             w='100%'
                             bgColor='#FF0000'
                         >Choose File</Button>
@@ -113,7 +142,7 @@ export default function UpdateItem({token, sellerId}) {
                     <Text
                         fontSize='2rem'
                     >
-                        Add an Item
+                        Item Information
                     </Text>
                 </Flex>
                 <Box>

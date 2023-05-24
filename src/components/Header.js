@@ -19,9 +19,10 @@ import React from 'react'
 import voughtLogo from '../assets/vought.png'
 import { useNavigate } from 'react-router-dom'
 import { FaCartArrowDown, FaHamburger } from 'react-icons/fa'
+import Swal from 'sweetalert2'
 
 
-export default function Header({setToken, token}) {
+export default function Header({setToken, token, role}) {
     const [isLargerThan800] = useMediaQuery('(min-width: 800px)')
     const navigate = useNavigate();
   return (
@@ -60,21 +61,41 @@ export default function Header({setToken, token}) {
         {isLargerThan800 ?
         <Flex
             width='40%'
-            justifyContent='space-between'
+            justifyContent={role != 'seller' ? 'space-between' : 'end'}
         >
-            <Box
-                alignContent='center'
-                display='grid'
-                onClick={()=>navigate('/products')}
-            >Products</Box>
-            <Box
-                alignContent='center'
-                display='grid'
-            >Want to be a Seller?</Box>
+            {role != 'seller' ?
+            <>
+                <Box
+                    alignContent='center'
+                    display='grid'
+                    onClick={()=>navigate('/products')}
+                >Products</Box>
+                <Box
+                    alignContent='center'
+                    display='grid'
+                >Want to be a Seller?</Box>
+            </>:
+            null
+            }
             <Flex
                 alignContent='center'
                 display='grid'
-                onClick={()=>navigate('/orderhistory')}
+                mr={'5'}
+                onClick={()=>{
+                    token != null ?
+                    navigate('/orderhistory') :
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Order history can only be accessed by users',
+                        text: 'Please Sign in to see order history',
+                        confirmButtonText: 'Proceed to sign in!',
+                        showCancelButton: true,
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        navigate('/signin')
+                    }
+                    }) 
+                }}
             >
                Order History        
             </Flex>

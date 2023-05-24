@@ -14,6 +14,7 @@ export default function RetrieveAllProducts({token}) {
           })
           .then(res => res.json())
           .then(data => {
+            console.log(data)
             setItems(data)
           })
       },[])

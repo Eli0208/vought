@@ -21,6 +21,23 @@ export default function AddItem({token, sellerId}) {
     const pricRef = useRef();
     const stocRef = useRef();
 
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [imageUrl, setImageUrl] = useState('');
+    const fileInputRef = useRef(null);
+
+    const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+    const fileUrl = URL.createObjectURL(file);
+    setImageUrl(fileUrl);
+    const formData = new FormData();
+    formData.append("image", selectedFile);
+    };
+
+    const handleUpload = () => {
+        fileInputRef.current.click();
+    }
+
     const AddItem = () => {
 
         if(name == '' || description == '' || price == '' || stocks == ''){
@@ -30,19 +47,20 @@ export default function AddItem({token, sellerId}) {
                 text: 'Please double check entries',
             })
         }else{
+            const formData = new FormData();
+            formData.append("name", name);
+            formData.append("description", description);
+            formData.append('price', price);
+            formData.append('quantity', stocks);
+            formData.append('sellerId', sellerId);
+            formData.append("image", selectedFile);
+            console.log(formData);
             fetch(`${process.env.REACT_APP_API_URL}/products`, {
                 method: "POST",
                 headers: {
                     Authorization : `Bearer ${token}`,
-                    "Content-type" : "application/json"
                 },
-                body: JSON.stringify({
-                    name: name,
-                    description, description,
-                    price: price,
-                    quantity: stocks,
-                    sellerId: sellerId
-                })
+                body: formData,
             })
             .then(res => res.json())
             .then(data => {
@@ -82,11 +100,18 @@ export default function AddItem({token, sellerId}) {
             <Box 
                 width='80%'
                 >
-                    <Image src={ph} w='100%'/>
+                    <Image src={imageUrl != '' ? imageUrl :ph} w='100%'/>
                     <Box
                         mt='1rem'
                     >
+                        <Input 
+                            type="file"
+                            ref={fileInputRef}
+                            style={{ display: 'none' }}
+                            onChange={handleFileChange}
+                            />
                         <Button
+                            onClick={() => handleUpload()}
                             w='100%'
                             bgColor='#FF0000'
                         >Choose File</Button>

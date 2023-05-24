@@ -3,8 +3,9 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import ph from '../assets/placeholder.jpg'
 import { FaCartPlus } from 'react-icons/fa';
+import Swal from 'sweetalert2';
 
-export default function ViewItem() {
+export default function ViewItem({token}) {
     const {productId} = useParams();
     const [item, setItem] = useState();
     const navigate = useNavigate();
@@ -29,10 +30,11 @@ export default function ViewItem() {
             >
                 <Box
                 width='80%'
+                align='center'
                 >
                     <Image 
-                        src={ph}
-                        width='100%'
+                        src={item.image ? `${process.env.REACT_APP_API_URL}/${item.image}` : ph}
+                        height='100%'
                     />
                     <Flex
                         justifyContent='center'
@@ -41,7 +43,21 @@ export default function ViewItem() {
                             width='25%'
                             m='5'
                             bgColor='#FF0000'
-                            onClick={() => navigate(`/checkout/${productId}`)}
+                            onClick={() =>{ 
+                                token != null ?
+                                navigate(`/checkout/${productId}`):
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Check out is only available for registered user',
+                                    text: 'Please Sign in to check items out',
+                                    confirmButtonText: 'Proceed to sign in!',
+                                    showCancelButton: true,
+                                }).then((result) => {
+                                if (result.isConfirmed) {
+                                    navigate('/signin')
+                                }
+                                }) 
+                            }}
                         >Check out</Button>
                         <Button
                             width='25%'

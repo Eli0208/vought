@@ -63,6 +63,7 @@ export default function Checkout({token}) {
                 padding='5'
                 border='1px solid #C0C0C0'
                 borderRadius='lg'
+                bgColor='#333333'
             >
                 <Flex>
                     <Text
@@ -107,7 +108,7 @@ export default function Checkout({token}) {
                 padding='5'
                 border='1px solid #C0C0C0'
                 borderRadius='lg'
-                
+                bgColor='#333333'
                 >
                 <Flex
                     width='100%'
@@ -152,13 +153,13 @@ export default function Checkout({token}) {
                     >
                         <Button
                             bgColor='#FF0000'
-                            onClick={() => setQuantity(quantity + 1)}
-                        >+</Button>
+                            onClick={() => handleMinus()}
+                        >-</Button>
                         <Text my={2} mx={4} alignItems='center'>{quantity}</Text>
                         <Button
                             bgColor='#FF0000'
-                            onClick={() => handleMinus()}
-                        >-</Button>
+                            onClick={() => setQuantity(quantity + 1)}
+                        >+</Button>
                     </Flex>
                 </Flex>
             </Box>
@@ -173,6 +174,7 @@ export default function Checkout({token}) {
                     border='1px solid #C0C0C0'
                     borderRadius='lg'
                     width='100%'
+                    bgColor='#333333'
             >
                 <Box>
                     <Text fontSize='1.3rem'>
