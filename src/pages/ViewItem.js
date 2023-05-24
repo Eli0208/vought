@@ -31,6 +31,7 @@ export default function ViewItem({token}) {
                 <Box
                 width='80%'
                 align='center'
+                h='75%'
                 >
                     <Image 
                         src={item.image ? `${process.env.REACT_APP_API_URL}/${item.image}` : ph}

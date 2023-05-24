@@ -96,11 +96,14 @@ export default function AddItem({token, sellerId}) {
         <Flex
             width='50%'
             justifyContent='center'
+            height='100%'
         >
             <Box 
                 width='80%'
+                align='center'
                 >
-                    <Image src={imageUrl != '' ? imageUrl :ph} w='100%'/>
+                    <Image src={imageUrl != '' ? imageUrl :ph} 
+                    height='50%'/>
                     <Box
                         mt='1rem'
                     >

@@ -11,7 +11,11 @@ function ProductCard({product}) {
       <Box
       >
         <Box>
-          <Image src={product.image == null ? ph : `${process.env.REACT_APP_API_URL}/${product.image}`} alt='' />
+          <Image 
+          src={product.image == null ? ph : `${process.env.REACT_APP_API_URL}/${product.image}`} 
+          alt='' 
+          height='25%'
+          />
         </Box>
         <Flex
           width='100%'
