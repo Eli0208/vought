@@ -1,9 +1,12 @@
-import { Box, Flex } from '@chakra-ui/react'
+import { Box, Flex, Text } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import ProductCard from '../components/ProductCard';
+import { FaStepBackward } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 export default function Products() {
     const [products, setProducts] = useState();
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_URL}/products/`)
@@ -11,7 +14,36 @@ export default function Products() {
         .then(data => setProducts(data))
     },[])
   return (
-    <Flex
+    <Box
+      h='85%'
+    >
+      <Flex
+                justifyContent='space-between'
+                alignContent='center'
+                width='100%'
+            >
+                <Box
+                    width='33.33%'
+                    paddingLeft='1rem'
+                >
+                    <FaStepBackward size='2rem' onClick={() => navigate('/')}/>
+                </Box>
+                <Flex
+                    width='33.33%'
+                    justifyContent='center'
+                >
+                    <Text
+                    fontSize='2rem'
+                    >
+                        Products
+                    </Text>
+                </Flex>
+                <Box
+                    width='33.33%'
+                >
+                </Box>
+      </Flex>
+      <Flex
         justifyContent='space-between'
         m='5'
         padding='5'
@@ -44,6 +76,7 @@ export default function Products() {
                 <ProductCard product={product}/>
             </Box>))
         : 'no product available'}
-    </Flex>
+      </Flex>
+    </Box>
   )
 }

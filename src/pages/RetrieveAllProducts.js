@@ -1,5 +1,6 @@
 import { Box, Button, Flex, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react'
 import React, {useEffect, useState} from 'react'
+import { FaBackward, FaStepBackward } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 export default function RetrieveAllProducts({token}) {
@@ -22,22 +23,58 @@ export default function RetrieveAllProducts({token}) {
     <Flex
         width='100%'
         justifyContent='center'
+        h='75%'
     >
         <Box
-            my='5%'
+            my='1rem'
+            h='100%'
         >
             <Flex
-                justifyContent='center'
+                justifyContent='space-between'
+                alignContent='center'
+                width='100%'
             >
-                <Text
-                    fontSize='2rem'
+                <Box
+                    width='33.33%'
+                    paddingLeft='1rem'
                 >
-                    Your Product Listings
-                </Text>
+                    <FaStepBackward size='2rem' onClick={() => navigate('/')}/>
+                </Box>
+                <Flex
+                    width='33.33%'
+                    justifyContent='center'
+                >
+                    <Text
+                    fontSize='2rem'
+                    >
+                        Your Product Listings
+                    </Text>
+                </Flex>
+                <Box
+                    width='33.33%'
+                >
+                </Box>
             </Flex>
             
             <Flex
                 justifyContent='center'
+                h='94%'
+            overflowY='auto'
+            sx={{
+            '&::-webkit-scrollbar': {
+              width: '.5rem',
+            },
+            '&::-webkit-scrollbar-track': {
+              background: '#333333',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              background: '#001A3D',
+              borderRadius: '3px',
+            },
+            '&::-webkit-scrollbar-thumb:hover': {
+              background: '#555',
+            },
+          }}
             >
                 { items ?
                     <Table variant="striped" colorScheme='#FF0000'>

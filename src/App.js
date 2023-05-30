@@ -24,6 +24,7 @@ import ViewItem from './pages/ViewItem';
 import Checkout from './pages/Checkout';
 import OrderHistory from './pages/OrderHistory';
 import Orders from './pages/Orders';
+import Cart from './pages/Cart';
 
 
 const theme = extendTheme({
@@ -72,6 +73,22 @@ function App() {
       bgColor='#001A3D'
       color='#C0C0C0'
       height='100vh'
+      overflowY='auto'
+      sx={{
+        '&::-webkit-scrollbar': {
+          width: '.5rem',
+        },
+        '&::-webkit-scrollbar-track': {
+          background: '#333333',
+        },
+        '&::-webkit-scrollbar-thumb': {
+          background: '#001A3D',
+          borderRadius: '3px',
+        },
+        '&::-webkit-scrollbar-thumb:hover': {
+          background: '#555',
+        },
+      }}
       >
         <Router>
           <Header token={token} setToken={setToken} role={role}/>
@@ -84,6 +101,7 @@ function App() {
             <Route path='/viewitem/:productId' element={<ViewItem token = {token}/>} />
             <Route path='/checkout/:productId' element={<Checkout token={token}/>} />
             <Route path='/orderhistory' element={<OrderHistory token={token}/>} />
+            <Route path='/cart' element={<Cart token={token}/>} />
           </Routes>
           }
           {role == 'seller' &&

@@ -73,10 +73,8 @@ export default function Header({setToken, token, role}) {
                 <Box
                     alignContent='center'
                     display='grid'
-                >Want to be a Seller?</Box>
-            </>:
-            null
-            }
+                    onClick={() => navigate('/cart')}
+                >Cart</Box>
             <Flex
                 alignContent='center'
                 display='grid'
@@ -99,6 +97,9 @@ export default function Header({setToken, token, role}) {
             >
                Order History        
             </Flex>
+            </>:
+            null
+            }
             <Box
                 alignContent='center'
                 display='grid'

@@ -10,6 +10,8 @@ import {
 import React, { useRef, useState } from 'react'
 import ph from '../assets/placeholder.jpg'
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
+import { FaStepBackward } from 'react-icons/fa';
 
 export default function AddItem({token, sellerId}) {
     const [name, setName] = useState('');
@@ -25,6 +27,7 @@ export default function AddItem({token, sellerId}) {
     const [imageUrl, setImageUrl] = useState('');
     const fileInputRef = useRef(null);
 
+    const navigate = useNavigate()
     const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
@@ -87,40 +90,42 @@ export default function AddItem({token, sellerId}) {
     }
 
   return (
-    <Flex
+    <Box
+    height='80%'
+    >
+        <Flex
+                justifyContent='space-between'
+                alignContent='center'
+                width='100%'
+            >
+                <Box
+                    width='33.33%'
+                    paddingLeft='1rem'
+                >
+                    <FaStepBackward size='2rem' onClick={() => navigate('/')}/>
+                </Box>
+                <Flex
+                    width='33.33%'
+                    justifyContent='center'
+                >
+                    <Text
+                    fontSize='2rem'
+                    >
+                        Add Item
+                    </Text>
+                </Flex>
+                <Box
+                    width='33.33%'
+                >
+                </Box>
+        </Flex>
+        <Flex
         width ='100%'
         justifyContent='center'
         alignContent='center'
-        mt='5%'
+        mt='1'
+        height='100%'
     >   
-        <Flex
-            width='50%'
-            justifyContent='center'
-            height='100%'
-        >
-            <Box 
-                width='80%'
-                align='center'
-                >
-                    <Image src={imageUrl != '' ? imageUrl :ph} 
-                    height='50%'/>
-                    <Box
-                        mt='1rem'
-                    >
-                        <Input 
-                            type="file"
-                            ref={fileInputRef}
-                            style={{ display: 'none' }}
-                            onChange={handleFileChange}
-                            />
-                        <Button
-                            onClick={() => handleUpload()}
-                            w='100%'
-                            bgColor='#FF0000'
-                        >Choose File</Button>
-                    </Box>
-            </Box>
-        </Flex>
         <Flex
             width='50%'
             alignContent='center'
@@ -129,13 +134,6 @@ export default function AddItem({token, sellerId}) {
             <Box
                 width='80%'
             >
-                <Flex>
-                    <Text
-                        fontSize='2rem'
-                    >
-                        Add an Item
-                    </Text>
-                </Flex>
                 <Box>
                     <Box>
                         Product name:
@@ -187,7 +185,38 @@ export default function AddItem({token, sellerId}) {
                 </Box>
             </Box>
         </Flex>
+        <Flex
+            width='50%'
+            justifyContent='center'
+            height='100%'
+        >
+            <Box 
+                width='80%'
+                align='center'
+                height='100%'
+                >
+                    <Image src={imageUrl != '' ? imageUrl :ph} 
+                    height='75%'/>
+                    <Box
+                        mt='1rem'
+                    >
+                        <Input 
+                            type="file"
+                            ref={fileInputRef}
+                            style={{ display: 'none' }}
+                            onChange={handleFileChange}
+                            />
+                        <Button
+                            onClick={() => handleUpload()}
+                            w='100%'
+                            bgColor='#FF0000'
+                        >Choose File</Button>
+                    </Box>
+            </Box>
+        </Flex>
 
     </Flex>
+    </Box>
+    
   )
 }

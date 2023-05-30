@@ -1,6 +1,7 @@
 import { Box, Flex, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 import { Button } from 'bootstrap';
 import React, { useEffect, useState } from 'react'
+import { FaStepBackward } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 export default function OrderHistory({token}) {
@@ -19,17 +20,34 @@ export default function OrderHistory({token}) {
   return (
     <Box
         height='90%'
-        align='center'
         width='100%'
         justifyContent='center'
     >
         <Flex
-        width='100%'
-        justifyContent='center'
-        >
-            <Text
-                fontSize='2rem'
-            >Order History</Text>
+                justifyContent='space-between'
+                alignContent='center'
+                width='100%'
+            >
+                <Box
+                    width='33.33%'
+                    paddingLeft='1rem'
+                >
+                    <FaStepBackward size='2rem' onClick={() => navigate('/')}/>
+                </Box>
+                <Flex
+                    width='33.33%'
+                    justifyContent='center'
+                >
+                    <Text
+                    fontSize='2rem'
+                    >
+                        Orders
+                    </Text>
+                </Flex>
+                <Box
+                    width='33.33%'
+                >
+                </Box>
         </Flex>
         <Box
         h='90%'

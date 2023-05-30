@@ -1,6 +1,6 @@
 import { Box, Flex, Text } from '@chakra-ui/react'
 import React from 'react'
-import { FaCartPlus, FaStore } from 'react-icons/fa'
+import { FaCartPlus, FaHistory, FaStore } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 
 export default function SellerDashboard() {
@@ -27,7 +27,7 @@ export default function SellerDashboard() {
                 mt = '10%'
             >
                 <Box
-                    mx='48'
+                    mx='20'
                     onClick = {()=> navigate('/additem')}
                 >
                     <FaCartPlus size='15rem' />
@@ -38,7 +38,7 @@ export default function SellerDashboard() {
                     </Flex>
                 </Box>
                 <Box
-                    mx='48'
+                    mx='20'
                     onClick = {()=> navigate('/viewproducts')}
                 >
                     <FaStore size='15rem'/>
@@ -47,7 +47,17 @@ export default function SellerDashboard() {
                     >
                         <Text>View Item</Text>
                     </Flex>
-                    
+                </Box>
+                <Box
+                    mx='20'
+                    onClick = {()=> navigate('/orderhistory')}
+                >
+                    <FaHistory size='15rem'/>
+                    <Flex
+                        justifyContent='center'
+                    >
+                        <Text>Orders</Text>
+                    </Flex>
                 </Box>
             </Flex>
             

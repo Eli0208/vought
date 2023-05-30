@@ -1,10 +1,13 @@
 import { Box, Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Table, Tbody, Td, Text, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
+import { FaStepBackward } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 export default function Orders({token}) {
     const [orders, setOrder] = useState();
     const [userOrders, setUserOrders] = useState();
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const navigate = useNavigate();
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_URL}/users/allorders`,{
             method: 'POST',
@@ -23,17 +26,34 @@ export default function Orders({token}) {
     >
         <Box
         height='90%'
-        align='center'
-        width='80%'
-        justifyContent='center'
-        >
-        <Flex
         width='100%'
         justifyContent='center'
         >
-            <Text
-                fontSize='2rem'
-            >Order History</Text>
+        <Flex
+                justifyContent='space-between'
+                alignContent='center'
+                width='100%'
+            >
+                <Box
+                    width='33.33%'
+                    paddingLeft='1rem'
+                >
+                    <FaStepBackward size='2rem' onClick={() => navigate('/')}/>
+                </Box>
+                <Flex
+                    width='33.33%'
+                    justifyContent='center'
+                >
+                    <Text
+                    fontSize='2rem'
+                    >
+                        Orders
+                    </Text>
+                </Flex>
+                <Box
+                    width='33.33%'
+                >
+                </Box>
         </Flex>
         <Box
         h='90%'
